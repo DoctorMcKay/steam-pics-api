@@ -1,0 +1,11 @@
+{
+  "name": "openshift-iojs",
+  "version": "0.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "forever app.js"
+  },
+  "author": "",
+  "license": ""
+}
