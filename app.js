@@ -10,15 +10,13 @@ user.logOn(); // Log onto Steam anonymously
 var app = new Express();
 app.listen(PORT, IP);
 
+app.use(checkLogOn);
+
 app.get('/', function(req, res) {
 	res.redirect("https://github.com/DoctorMcKay/steam-pics-api");
 });
 
 app.get('/changes/:changenumber', function(req, res) {
-	if(!checkLogOn(req, res)) {
-		return;
-	}
-	
 	var changenumber = parseInt(req.params.changenumber, 10);
 	if(isNaN(changenumber)) {
 		sendJsonResponse(req, res, "Invalid changenumber", 400);
@@ -60,13 +58,12 @@ function checkParams(req, res, params) {
 	return true;
 }
 
-function checkLogOn(req, res) {
-	if(!user.steamID) {
+function checkLogOn(req, res, next) {
+	if(req.url != '/' && !user.steamID) {
 		sendJsonResponse(req, res, "Not logged onto Steam", 503);
-		return false;
+	} else {
+		next();
 	}
-	
-	return true;
 }
 
 function sendJsonResponse(req, res, response, statusCode) {
