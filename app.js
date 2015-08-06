@@ -4,12 +4,12 @@ const IP = process.env.OPENSHIFT_IOJS_IP || '127.0.0.1';
 var SteamUser = require('steam-user');
 var Express = require('express');
 
-var user = new SteamUser();
-
+var userOptions = {};
 if(process.env.OPENSHIFT_DATA_DIR) {
-	user.setOption('dataDirectory', process.env.OPENSHIFT_DATA_DIR);
+	userOptions.dataDirectory = process.env.OPENSHIFT_DATA_DIR;
 }
 
+var user = new SteamUser(null, userOptions);
 user.logOn(); // Log onto Steam anonymously
 
 var app = new Express();
