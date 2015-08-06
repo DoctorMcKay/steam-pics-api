@@ -53,8 +53,64 @@ app.get('/changes/:changenumber', function(req, res) {
 
 app.get('/info', function(req, res) {
 	if(!req.query || (!req.query.apps && !req.query.packages)) {
-		sendJsonResponse(req, res, "No apps or packages specified");
+		sendJsonResponse(req, res, "No apps or packages specified", 400);
+		return;
 	}
+	
+	var apps = req.query.apps ? req.query.apps.split(',') : [];
+	var packages = req.query.packages ? req.query.packages.split(',') : [];
+	
+	if(apps.concat(packages).some(function(id) {
+		return isNaN(id);
+	})) {
+		sendJsonResponse(req, res, "Invalid input ID", 400);
+		return;
+	}
+	
+	apps = apps.map(function(appid) {
+		return parseInt(appid, 10);
+	});
+	
+	packages = packages.map(function(packageid) {
+		return parseInt(packageid, 10);
+	});
+	
+	var timedOut = false;
+	var timeout = setTimeout(function() {
+		timedOut = true;
+		sendJsonResponse(req, res, "Steam request timed out", 504);
+	}, 30000); // 30 seconds
+	
+	user.getProductInfo(apps, packages, function(appData, packageData, unknownApps, unknownPackages) {
+		if(timedOut) {
+			return;
+		}
+		
+		var outApps = {};
+		var outPackages = {};
+		
+		var i;
+		for(i in appData) {
+			if(!appData.hasOwnProperty(i)) {
+				continue;
+			}
+			
+			outApps[i] = appData[i].appinfo;
+			outApps[i].change_number = appData[i].changenumber;
+		}
+		
+		for(i in packageData) {
+			if(!packageData.hasOwnProperty(i)) {
+				continue;
+			}
+			
+			outPackages[i] = packageData[i].packageinfo;
+		}
+		
+		sendJsonResponse(req, res, {"success": 1, "apps": outApps, "packages": outPackages, "unknownApps": unknownApps, "unknownPackages": unknownPackages});
+		
+		clearTimeout(timeout);
+	});
 });
 
 function checkParams(req, res, params) {
