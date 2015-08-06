@@ -35,16 +35,26 @@ app.get('/changes/:changenumber', function(req, res) {
 			return;
 		}
 		
-		// Remove null needs_token properties
-		apps.concat(packages).forEach(function(item) {
-			if(!item.needs_token) {
-				delete item.needs_token;
-			}
+		var appData = {};
+		var packageData = {};
+		
+		apps.forEach(function(app) {
+			appData[app.appid] = app.change_number;
 		});
 		
-		sendJsonResponse(req, res, {"success": 1, "current_changenumber": currentChangenumber, "apps": apps, "packages": packages});
+		packages.forEach(function(pkg) {
+			packageData[pkg.packageid] = pkg.change_number;
+		});
+		
+		sendJsonResponse(req, res, {"success": 1, "current_changenumber": currentChangenumber, "apps": appData, "packages": packageData});
 		clearTimeout(timeout);
 	});
+});
+
+app.get('/info', function(req, res) {
+	if(!req.query || (!req.query.apps && !req.query.packages)) {
+		sendJsonResponse(req, res, "No apps or packages specified");
+	}
 });
 
 function checkParams(req, res, params) {
