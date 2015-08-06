@@ -5,6 +5,11 @@ var SteamUser = require('steam-user');
 var Express = require('express');
 
 var user = new SteamUser();
+
+if(process.env.OPENSHIFT_DATA_DIR) {
+	user.setOption('dataDirectory', process.env.OPENSHIFT_DATA_DIR);
+}
+
 user.logOn(); // Log onto Steam anonymously
 
 var app = new Express();
