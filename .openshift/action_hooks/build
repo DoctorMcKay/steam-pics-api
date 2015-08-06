@@ -1,24 +1,15 @@
 #!/bin/bash
 
-# Below are example commands that I normally run during a build.
+HOME=$OPENSHIFT_REPO_DIR
+cd $OPENSHIFT_REPO_DIR
 
-# Change home directory (bower puts a lot of cache and tmp directories here)
-#HOME=$OPENSHIFT_REPO_DIR
-#cd $OPENSHIFT_REPO_DIR
+# Cache npm components on main gear
+if [ "$OPENSHIFT_GEAR_UUID" == "$OPENSHIFT_APP_UUID" ]; then
+  mkdir -p "$OPENSHIFT_DATA_DIR"node_modules
+  ln -s "$OPENSHIFT_DATA_DIR"node_modules node_modules
+fi
 
-# Cache npm and bower components on main gear
-#if [ "$OPENSHIFT_GEAR_UUID" == "$OPENSHIFT_APP_UUID" ]; then
-  #mkdir -p "$OPENSHIFT_DATA_DIR"node_modules
-  #mkdir -p "$OPENSHIFT_DATA_DIR"bower_components
-
-  #ln -s "$OPENSHIFT_DATA_DIR"node_modules node_modules
-  #ln -s "$OPENSHIFT_DATA_DIR"bower_components bower_components
-#fi
-
-#npm install --loglevel error
+npm install --loglevel error
 
 # Prune unused node node_modules
-#npm prune
-
-#bower install -q
-#grunt build
+npm prune

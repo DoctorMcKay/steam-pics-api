@@ -1,11 +1,19 @@
 {
-  "name": "openshift-iojs",
-  "version": "0.0.0",
-  "description": "",
-  "main": "app.js",
-  "scripts": {
-    "start": "forever app.js"
-  },
-  "author": "",
-  "license": ""
+	"name": "steam-pics-api",
+	"version": "1.0.0",
+	"description": "Provides an HTTP API to Steam's product information control system",
+	"main": "app.js",
+	"scripts": {
+		"start": "forever app.js"
+	},
+	"author": "Dr. McKay",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/DoctorMcKay/steam-pics-api.git"
+	},
+	"dependencies": {
+		"steam-user": "^1.5.2",
+		"express": "^4.13.3"
+	}
 }
