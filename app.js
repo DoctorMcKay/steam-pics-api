@@ -147,5 +147,5 @@ function sendJsonResponse(req, res, response, statusCode) {
 	}
 	
 	res.set('Content-Type', 'application/json');
-	res.send(JSON.stringify(response, null, req.query && req.query.prettyprint ? "\t" : null));
+	res.send(JSON.stringify(response, null, (req.query && req.query.prettyprint && req.query.prettyprint != 0) ? "\t" : null));
 }
