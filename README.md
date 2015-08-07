@@ -18,6 +18,10 @@ The app will bind to the IP specified in the `OPENSHIFT_IOJS_IP` environment var
 
 Data will be saved in the directory specified by the `OPENSHIFT_DATA_DIR` environment variable, or [node-steam-user](https://www.npmjs.com/package/steam-user)'s default platform-specific directory if not defined.
 
+# Public Installation
+
+I have an installation available on OpenShift at https://steampics-mckay.rhcloud.com. **I make no guarantees for the uptime of this service.**
+
 # API Usage
 
 ## Parameters
