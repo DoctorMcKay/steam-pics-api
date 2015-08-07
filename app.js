@@ -15,6 +15,7 @@ user.logOn(); // Log onto Steam anonymously
 var app = new Express();
 app.listen(PORT, IP);
 
+app.use(cors);
 app.use(checkLogOn);
 
 app.get('/', function(req, res) {
@@ -118,15 +119,9 @@ app.get('/info', function(req, res) {
 	});
 });
 
-function checkParams(req, res, params) {
-	for(var i = 0; i < params.length; i++) {
-		if(!req.query || typeof req.query[params[i]] === 'undefined') {
-			sendJsonResponse(req, res, "Missing required parameter '" + params[i] + "'", 400);
-			return false;
-		}
-	}
-	
-	return true;
+function cors(req, res, next) {
+	res.set('Access-Control-Allow-Origin', '*');
+	next();
 }
 
 function checkLogOn(req, res, next) {
