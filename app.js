@@ -112,7 +112,7 @@ app.get('/info', function(req, res) {
 			outPackages[i] = packageData[i].packageinfo;
 		}
 		
-		sendJsonResponse(req, res, {"success": 1, "apps": outApps, "packages": outPackages, "unknownApps": unknownApps, "unknownPackages": unknownPackages});
+		sendJsonResponse(req, res, {"success": 1, "apps": outApps, "packages": outPackages, "unknown_apps": unknownApps, "unknown_packages": unknownPackages});
 		
 		clearTimeout(timeout);
 	});
