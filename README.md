@@ -38,6 +38,7 @@ All endpoints respond in JSON with an appropriate `Content-Type`. All responses 
 
 - `200` on a successful response
 - `400` if you're missing request parameters or if one of your parameters is invalid
+- `500` if the backend request to Steam returns an error
 - `503` if the backend isn't logged onto Steam
 - `504` if the backend's request to Steam timed out
 
