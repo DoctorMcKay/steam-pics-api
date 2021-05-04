@@ -36,7 +36,13 @@ app.get('/changes/:changenumber', function(req, res) {
 		timedOut = true;
 	}, 15000); // 15 seconds
 	
-	user.getProductChanges(changenumber, function(currentChangenumber, apps, packages) {
+	user.getProductChanges(changenumber, function(err, currentChangenumber, apps, packages) {
+		if (err) {
+			sendJsonResponse(req, res, err.message, 500);
+			clearTimeout(timeout);
+			return;
+		}
+
 		if(timedOut) {
 			return;
 		}
@@ -87,7 +93,14 @@ app.get('/info', function(req, res) {
 		sendJsonResponse(req, res, "Steam request timed out", 504);
 	}, 30000); // 30 seconds
 	
-	user.getProductInfo(apps, packages, function(appData, packageData, unknownApps, unknownPackages) {
+	user.getProductInfo(apps, packages, function(err, appData, packageData, unknownApps, unknownPackages) {
+		if (err) {
+			sendJsonResponse(req, res, err.message, 500);
+			clearTimeout(timeout);
+			return;
+		}
+
+		
 		if(timedOut) {
 			return;
 		}

@@ -13,7 +13,7 @@
 		"url": "https://github.com/DoctorMcKay/steam-pics-api.git"
 	},
 	"dependencies": {
-		"steam-user": "^1.5.2",
-		"express": "^4.13.3"
+		"steam-user": "^4.19.4",
+		"express": "^4.17.1"
 	}
 }
