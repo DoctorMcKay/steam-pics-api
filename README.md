@@ -4,23 +4,22 @@ This is an HTTP API which proxies the Steam Product Information Control System (
 
 It's designed to run on [Red Hat OpenShift](https://www.openshift.com), but can run anywhere.
 
-It's written in JavaScript for use with node.js (v0.12.0 or later) or io.js.
+It's written in JavaScript for use with Node.js v8.0.0 or later.
 
 The app logs into Steam as an anonymous user (using the [node-steam-user](https://www.npmjs.com/package/steam-user) module), and proxies HTTP requests to the Steam backend.
 
 # OpenShift Usage
 
-To set it up on OpenShift, use [connyay's openshift-iojs cartridge](https://github.com/connyay/openshift-iojs) and just use this repository for your code.
+~~To set it up on OpenShift, use [connyay's openshift-iojs cartridge](https://github.com/connyay/openshift-iojs) and just use this repository for your code.~~
+
+I don't have any personal experience with OpenShift since io.js got merged into Node.js, so you'll just need to figure it out yourself.
+It should be as simple as finding a Node.js cartridge and using this repository as your code.
 
 # Usage Elsewhere
 
 The app will bind to the IP specified in the `OPENSHIFT_IOJS_IP` environment variable, and the port specified in the `OPENSHIFT_IOJS_PORT` variable. If not defined, it will default to `127.0.0.1` and `8080`, respectively.
 
 Data will be saved in the directory specified by the `OPENSHIFT_DATA_DIR` environment variable, or [node-steam-user](https://www.npmjs.com/package/steam-user)'s default platform-specific directory if not defined.
-
-# Public Installation
-
-I have an installation available on OpenShift at https://steampics-mckay.rhcloud.com. **I make no guarantees for the uptime of this service.**
 
 # API Usage
 
